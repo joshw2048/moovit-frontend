@@ -1,9 +1,10 @@
 import { Image, StyleSheet, Platform } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { HelloWave } from '@/components/starter/HelloWave';
+import ParallaxScrollView from '@/components/starter/ParallaxScrollView';
+import { ThemedText } from '@/components/starter/ThemedText';
+import { ThemedView } from '@/components/starter/ThemedView';
+import { Link } from 'expo-router';
 
 // this is the main screen of the app
 export default function HomeScreen() {
@@ -32,7 +33,10 @@ export default function HomeScreen() {
               web: 'F12'
             })}
           </ThemedText>{' '}
-          to open developer tools.
+          to open developer tools. Go to
+           <ThemedText type="defaultSemiBold"> 
+            <Link href="../SignupPage"> Onboarding </Link>
+           </ThemedText>to see the onboarding flow.
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>

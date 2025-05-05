@@ -1,13 +1,16 @@
 import React from 'react';
 
-import { TextInput, StyleSheet } from 'react-native';
+import { TextInput, StyleSheet, View } from 'react-native';
 import MoovitText from './MoovitText';
 import { Colors } from '@/constants/styles'
 
-// can be prefilled or not
-    // if prefilled, black unbold placeholder text, on focus gets black outline, unfocused is gray background, label gets bold
-    // if not prefilled, gray placeholder text, on focus gets blue outline, unfocused is no background, label gets blue and bold
-// should have x button to clear text
+/**
+ * Component for a labeled text input with dynamic styles based on if it's focused and prefilled
+ *  @param {string} prefilledText - Optional prefilled text to determine styles
+ *  @param {string} labelText - Text for the label
+ * Note: Prefilled: grey background, no border, black text & when selected, gets black border and bold label. Focused: white background, black border, black text & when selected, gets blue border and bold label
+ */
+// TODO add x button to clear text upon entry
 interface LabeledTextInputProps {
     prefilledText?: string;
     labelText: string;
@@ -18,23 +21,32 @@ const LabeledTextInput: React.FC<LabeledTextInputProps> = ({ prefilledText, labe
     const [isFocused, setIsFocused] = React.useState(false);
 
     return (
-        <>
-            <MoovitText style={{ color: prefilledText ? 'black' : 'blue', fontWeight: isFocused ? 'bold' : 'normal' }}>
-                {labelText}
+        <View style={styles.labeledTextInputWrapper}>
+            <MoovitText style={{ 
+            color: isFocused ? (prefilledText ? 'black' : Colors.moovitBlue) : 'black', 
+            fontFamily: isFocused ? 'InterBold' : 'Inter' ,
+            marginBottom: '1.5%',
+            }}>
+            {labelText}
             </MoovitText>
-            <TextInput style={{ backgroundColor: prefilledText ? Colors.defaultGrey : 'transparent', borderColor: prefilledText ? (isFocused ? 'black' : 'transparent') : Colors.moovitBlue, borderWidth: isFocused ? 2 : 0}}
-                placeholder ={placeholderText}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
+            <TextInput style={{ 
+                backgroundColor: prefilledText ? Colors.defaultGrey : 'transparent', 
+                borderColor: prefilledText ? (isFocused ? 'black' : 'transparent') : (isFocused ? Colors.moovitBlue : 'black'), 
+                borderWidth: isFocused ? 3 : 1,
+                borderRadius: 8,
+                height: 35,
+            }}
+            placeholder={placeholderText}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             />
-        </>
+        </View>
     )};
 
 const styles = StyleSheet.create({
-    label: {
-        
+    labeledTextInputWrapper: {
+        marginBottom: '3%',
     }
 });
-
 
 export default LabeledTextInput; 

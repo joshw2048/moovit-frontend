@@ -1,16 +1,15 @@
 import React from 'react';
 import MoovitText from './MoovitText';
 import { TextProps } from 'react-native';
+import { Colors } from "@/constants/styles"
 
 interface MoovitSubTextProps extends TextProps {
     children: React.ReactNode;
 }
 
 const MoovitSubText: React.FC<MoovitSubTextProps> = ({ children, ...props }) => {
-    return <MoovitText style={{ fontSize: 12 }} {...props}>
+    return <MoovitText style={{ fontSize: 12, color: Colors.darkGrey}} {...props}>
         {children}
     </MoovitText>;
 }
 export default MoovitSubText;
-
-//TODO in onboarding folder, make component for segment select. then will likely need a component for popup modal during onboarding
