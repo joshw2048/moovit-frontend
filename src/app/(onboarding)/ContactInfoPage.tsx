@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import NavHeader from "@/components/NavHeader";
 import LabeledTextInput from "@/components/LabeledTextInput";
 import MoovitSubText from "@/components/MoovitSubText";
 import React from "react";
@@ -13,7 +13,7 @@ const SignupPage: React.FC<SignupPageProps> = () => {
     return (
         <View style={[styles.screen]}>
             <View style={[styles.header]}>
-                <Header title='Sign Up' />
+                <NavHeader title='Sign Up' backButton={true}/>
             </View>
             <View style={[styles.inputArea]}>
                 <LabeledTextInput labelText="Email"></LabeledTextInput>

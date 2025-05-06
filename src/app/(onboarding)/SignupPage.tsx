@@ -1,19 +1,22 @@
-import Header from "@/components/Header";
+import NavHeader from "@/components/NavHeader";
 import LabeledTextInput from "@/components/LabeledTextInput";
 import MoovitSubText from "@/components/MoovitSubText";
 import React from "react";
 import { Linking, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/styles"
 import MoovitText from "@/components/MoovitText";
+import { useRouter } from "expo-router";
 
 interface SignupPageProps {}
 
 const SignupPage: React.FC<SignupPageProps> = () => {
     // TODO: fix back button, fix header, style, make username and password required, validate password, make input field be spaced better
+    const router = useRouter();
+
     return (
         <View style={[styles.screen]}>
             <View style={[styles.header]}>
-                <Header title='Sign Up' />
+                <NavHeader title='Sign Up' backButton={true}/>
             </View>
             <View style={[styles.inputArea]}>
                 <LabeledTextInput labelText="Username"></LabeledTextInput>
@@ -22,7 +25,7 @@ const SignupPage: React.FC<SignupPageProps> = () => {
             <View>
                 <TouchableOpacity style={[styles.nextButton]} onPress={() => {
                     // TODO: Handle next button logic here
-                    console.log("Next button pressed");
+                    router.navigate('../ContactInfoPage');
                 }}>
                     <MoovitText style={{color: 'white', fontFamily: 'InterBold'}}>Next</MoovitText>
                 </TouchableOpacity>

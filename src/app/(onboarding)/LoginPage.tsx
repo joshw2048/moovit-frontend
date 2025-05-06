@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/NavHeader";
 import LabeledTextInput from "@/components/LabeledTextInput";
 import MoovitSubText from "@/components/MoovitSubText";
 import React from "react";

@@ -1,4 +1,4 @@
-import Header from '@/components/Header';
+import Header from '@/components/NavHeader';
 import MoovitText from '@/components/MoovitText';
 import { Colors } from '@/constants/styles';
 import UnitSelect from '@/features/onboarding/components/UnitSelect';
