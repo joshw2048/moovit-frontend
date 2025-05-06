@@ -6,32 +6,30 @@ import { Linking, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/styles"
 import MoovitText from "@/components/MoovitText";
 
-interface LoginPageProps {}
+interface ForgotPasswordPageProps {}
 
-const LoginPage: React.FC<LoginPageProps> = () => {
+const LoginPage: React.FC<ForgotPasswordPageProps> = () => {
     // TODO: fix back button, fix header, style, make username and password required, validate password, make input field be spaced better
     return (
         <View style={[styles.screen]}>
             <View style={[styles.header]}>
-                <Header title='Log In' />
+                <Header title='Forgot Password' />
             </View>
             <View style={[styles.inputArea]}>
-                <LabeledTextInput labelText="Username or Email"></LabeledTextInput>
-                <LabeledTextInput labelText="Password"></LabeledTextInput>
+                <LabeledTextInput labelText="Email"></LabeledTextInput>
+            </View>
+            <View>
+                <MoovitSubText>
+                    Enter your email, and if an account exists, we will send you instructions to reset your password.
+                </MoovitSubText>
             </View>
             <View>
                 <TouchableOpacity style={[styles.nextButton]} onPress={() => {
                     // TODO: Handle next button logic here
                     console.log("Next button pressed");
                 }}>
-                    <MoovitText style={{color: 'white', fontFamily: 'InterBold'}}>Log in</MoovitText>
+                    <MoovitText style={{color: 'white', fontFamily: 'InterBold'}}>Send Password Recovery</MoovitText>
                 </TouchableOpacity>
-            </View>
-            <View>
-                <MoovitText 
-                    style={{color: 'white', fontFamily: 'InterBold'}} 
-                    onPress={() => {console.log("Rest password pressed");
-                }}>Reset Password</MoovitText>
             </View>
         </View>
     );

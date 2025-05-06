@@ -9,7 +9,7 @@ interface MoovitHeading3Props extends TextProps {
 
 const MoovitHeading3: React.FC<MoovitHeading3Props> = ({ children, customStyle, ...props }) => {
     return <MoovitText style={[
-        { fontSize: 18, fontFamily: 'InterBold' },
+        { fontSize: 20, fontFamily: 'InterBold' },
         customStyle
     ]} 
     {...props}

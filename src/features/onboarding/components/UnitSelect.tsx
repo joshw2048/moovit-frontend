@@ -1,7 +1,8 @@
-import React from 'react';
-
 import SegmentedControl from '@react-native-segmented-control/segmented-control';
-import MoovitHeaderText from '@/components/MoovitHeading3';
+import MoovitText from '@/components/MoovitText';
+import { View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Colors } from '@/constants/styles';
 
 interface UnitSelectProps {
     label: string;
@@ -14,19 +15,41 @@ const UnitSelect: React.FC<UnitSelectProps> = ({
     options,
     customStyles = {}
 }) => {
-    return <>
-        <MoovitHeaderText>
-            {label}
-        </MoovitHeaderText>
-        <SegmentedControl
-            values={options}
-            selectedIndex={0}
-            onChange={(event) => {
-                console.log(event.nativeEvent.selectedSegmentIndex);
-            }}
-            style={[{ marginTop: 10, marginBottom: 10 }]}
-        />
-    </>
+    const [selectedIndex, setSelectedIndex] = useState(0);
+
+    return (
+        <View style={[styles.container]}>
+            <MoovitText style={[styles.labelText]}>
+                {label}
+            </MoovitText>
+            <SegmentedControl
+                values={options}
+                selectedIndex={selectedIndex}
+                onChange={(event) => {
+                    const newIndex = event.nativeEvent.selectedSegmentIndex;
+                    setSelectedIndex(newIndex);
+                }}
+                style={[{ marginTop: 10, marginBottom: 10 }]}
+                tintColor={Colors.moovitBlue}
+                backgroundColor={Colors.defaultGrey}
+                fontStyle={{
+                    color: 'black'
+                }}
+                activeFontStyle={{
+                    color: 'white'
+                }}
+            />
+        </View>
+    );
 }
+
+const styles = StyleSheet.create({
+    labelText: {
+        fontFamily: 'InterBold'
+    },
+    container: {
+        marginBottom: '5%'
+    }
+});
 
 export default UnitSelect;

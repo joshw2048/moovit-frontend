@@ -11,6 +11,7 @@ import { Colors } from '@/constants/styles'
  * Note: Prefilled: grey background, no border, black text & when selected, gets black border and bold label. Focused: white background, black border, black text & when selected, gets blue border and bold label
  */
 // TODO add x button to clear text upon entry
+// TODO fix text location
 interface LabeledTextInputProps {
     prefilledText?: string;
     labelText: string;
@@ -25,7 +26,7 @@ const LabeledTextInput: React.FC<LabeledTextInputProps> = ({ prefilledText, labe
             <MoovitText style={{ 
             color: isFocused ? (prefilledText ? 'black' : Colors.moovitBlue) : 'black', 
             fontFamily: isFocused ? 'InterBold' : 'Inter' ,
-            marginBottom: '1.5%',
+            marginBottom: '2%',
             }}>
             {labelText}
             </MoovitText>
