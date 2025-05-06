@@ -10,8 +10,6 @@ import { Colors } from '@/constants/styles'
  *  @param {string} labelText - Text for the label
  * Note: Prefilled: grey background, no border, black text & when selected, gets black border and bold label. Focused: white background, black border, black text & when selected, gets blue border and bold label
  */
-// TODO add x button to clear text upon entry
-// TODO fix text location
 interface LabeledTextInputProps {
     prefilledText?: string;
     labelText: string;
@@ -20,6 +18,7 @@ interface LabeledTextInputProps {
 
 const LabeledTextInput: React.FC<LabeledTextInputProps> = ({ prefilledText, labelText, placeholderText}) => {
     const [isFocused, setIsFocused] = React.useState(false);
+    const [text, setText] = React.useState(prefilledText || '');
 
     return (
         <View style={styles.labeledTextInputWrapper}>
@@ -36,6 +35,7 @@ const LabeledTextInput: React.FC<LabeledTextInputProps> = ({ prefilledText, labe
                 borderWidth: isFocused ? 3 : 1,
                 borderRadius: 8,
                 height: 35,
+                paddingHorizontal: 10
             }}
             placeholder={placeholderText}
             onFocus={() => setIsFocused(true)}
