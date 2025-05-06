@@ -21,7 +21,6 @@ const SignupPage: React.FC<SignupPageProps> = () => {
             </View>
             <View>
                 <TouchableOpacity style={[styles.nextButton]} onPress={() => {
-                    // TODO: Handle next button logic here
                     console.log("Next button pressed");
                 }}>
                     <MoovitText style={{color: 'white', fontFamily: 'InterBold'}}>Next</MoovitText>
