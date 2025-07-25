@@ -2,12 +2,12 @@ import React from 'react';
 import MoovitText from './MoovitText';
 import { StyleProp, TextProps, TextStyle } from 'react-native';
 
-interface MoovitHeading3Props extends TextProps {
+interface MoovitHeading2Props extends TextProps {
     children: React.ReactNode;
     customStyle?: StyleProp<TextStyle>;
 }
 
-const MoovitHeading3: React.FC<MoovitHeading3Props> = ({ children, customStyle, ...props }) => {
+const MoovitHeading2: React.FC<MoovitHeading2Props> = ({ children, customStyle, ...props }) => {
     return <MoovitText style={[
         { fontSize: 20, fontFamily: 'InterBold' },
         customStyle
@@ -17,4 +17,4 @@ const MoovitHeading3: React.FC<MoovitHeading3Props> = ({ children, customStyle, 
         {children}
     </MoovitText>;
 }
-export default MoovitHeading3;
+export default MoovitHeading2;

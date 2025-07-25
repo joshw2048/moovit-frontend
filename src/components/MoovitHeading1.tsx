@@ -7,7 +7,7 @@ interface MoovitHeading1Props extends TextProps {
 }
 
 const MoovitHeading1: React.FC<MoovitHeading1Props> = ({ children, ...props }) => {
-    return <MoovitText style={{ fontSize: 24, fontWeight: 'bold' }} {...props}>
+    return <MoovitText style={{ fontSize: 24, fontFamily: 'InterBold'}} {...props}>
         {children}
     </MoovitText>;
 }

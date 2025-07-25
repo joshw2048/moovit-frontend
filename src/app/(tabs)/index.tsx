@@ -37,6 +37,10 @@ export default function HomeScreen() {
            <ThemedText type="defaultSemiBold"> 
             <Link href="../SignupPage"> Onboarding </Link>
            </ThemedText>to see the onboarding flow.
+           <ThemedText>Go to
+            <Link href="../WorkoutsHomePage"> Workouts </Link>
+            to see the workouts page.
+           </ThemedText>
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>

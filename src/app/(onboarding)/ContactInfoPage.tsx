@@ -5,10 +5,12 @@ import React from "react";
 import { Linking, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/styles"
 import MoovitText from "@/components/MoovitText";
+import { useRouter } from "expo-router";
 
 interface SignupPageProps {}
 
 const SignupPage: React.FC<SignupPageProps> = () => {
+    const router = useRouter();
     // TODO: fix back button, fix header, style, make username and password required, validate password, make input field be spaced better
     return (
         <View style={[styles.screen]}>
@@ -22,6 +24,7 @@ const SignupPage: React.FC<SignupPageProps> = () => {
             <View>
                 <TouchableOpacity style={[styles.nextButton]} onPress={() => {
                     console.log("Next button pressed");
+                    router.navigate('../SelectUnitsPage');
                 }}>
                     <MoovitText style={{color: 'white', fontFamily: 'InterBold'}}>Next</MoovitText>
                 </TouchableOpacity>

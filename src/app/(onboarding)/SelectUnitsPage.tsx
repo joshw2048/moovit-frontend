@@ -1,4 +1,4 @@
-import Header from '@/components/NavHeader';
+import NavHeader from '@/components/NavHeader';
 import MoovitText from '@/components/MoovitText';
 import { Colors } from '@/constants/styles';
 import UnitSelect from '@/features/onboarding/components/UnitSelect';
@@ -10,7 +10,7 @@ const SelectUnitsPage: React.FC = () => {
     return (
         <View style={[styles.screen]}>
             <View style={[styles.header]}>
-                <Header title='Select Units' />
+                <NavHeader title='Select Units' backButton={true} nextButton={true} nextButtonLabel='Skip' nextButtonPath='../InputGoalsPage'/>
             </View>
             <View>
                 <UnitSelect label="Weight" options={['Kilograms', 'Pounds']}></UnitSelect>
