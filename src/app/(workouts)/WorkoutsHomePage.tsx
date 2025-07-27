@@ -2,10 +2,12 @@ import MoovitHeading1 from '@/components/MoovitHeading1';
 import MoovitHeading2 from '@/components/MoovitHeading2';
 import MoovitText from '@/components/MoovitText';
 import { Colors } from '@/constants/styles';
+import WorkoutFolder from '@/features/workouts/components/WorkoutFolder';
 import { useRouter } from 'expo-router';
 import React from 'react';
 
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 interface WorkoutsHomePageProps {}
 
@@ -15,7 +17,7 @@ const WorkoutsHomePage: React.FC<WorkoutsHomePageProps> = () => {
     const router = useRouter(); 
     
     return (
-        <View style={[styles.screen]}>
+        <ScrollView style={[styles.screen]}>
             <View style={[styles.headerContainer]}>
                 <MoovitHeading1>Workouts</MoovitHeading1>
             </View>
@@ -42,9 +44,14 @@ const WorkoutsHomePage: React.FC<WorkoutsHomePageProps> = () => {
                         <MoovitText style={[styles.emptyButtonText]}>-o Search</MoovitText>
                     </TouchableOpacity>
                     {/* Take in a list of folders and programtically render them into a component*/}
+                    {/* For now, it's a singular folder component to show it */}
+                </View>
+                <View style={styles.workoutFolderContainer}>
+                    <WorkoutFolder title="Upper Body Workouts" />
+                    <WorkoutFolder title="Lower Body Workouts" />
                 </View>
             </View>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -88,6 +95,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: '5%',
+    },
+    workoutFolderContainer: {
+        marginTop: '5%',
+        rowGap: 32, 
+        // TODO add styling for workout folder container
     }
 })
 

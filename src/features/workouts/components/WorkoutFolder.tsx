@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import MoovitHeading2 from '@/components/MoovitHeading2';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import WorkoutCard from './WorkoutCard';
@@ -20,11 +20,27 @@ interface WorkoutFolderProps {
  
      return (
          <View>
-            {/* add carrot for dropdown that sets isCollapsed to opposite */}
-            <AntDesign name="right" size={24} color="black"/>
-            <MoovitHeading2>{ title }</MoovitHeading2>
-            {/* TODO fix conditional rendering of number of workout cards */}
-            <WorkoutCard title={"TODO"} lastPerformed={"TODO"} exercises={["TODO", "TODO"]}></WorkoutCard>
+            <View style={[styles.headerRow]}>
+                {/* add carrot for dropdown that sets isCollapsed to opposite */}
+                <MoovitHeading2>{ title }</MoovitHeading2>
+                <TouchableOpacity onPress={() => setIsCollapsed(!isCollapsed)}>
+                    <AntDesign
+                        name={isCollapsed ? "down" : "right"}
+                        size={20}
+                        color="black"
+                    />
+                </TouchableOpacity>
+            </View>
+            {!isCollapsed && (
+                <View style={[styles.folderContainer]}>
+                    {/* TODO fix conditional rendering of number of workout cards */}
+                    <WorkoutCard title={"TODO"} lastPerformed={"TODO"} exercises={["TODO", "TODO", "TODO", "TODO", "TODO", "TODOoooooooooooooooooooooooooooooooooooooooooooooooooooo"]}></WorkoutCard>
+                    <WorkoutCard title={"TODO"} lastPerformed={"TODO"} exercises={["TODO", "TODO"]}></WorkoutCard>
+                    <WorkoutCard title={"TODO"} lastPerformed={"TODO"} exercises={["TODO", "TODO"]}></WorkoutCard>
+                    <WorkoutCard title={"TODO"} lastPerformed={"TODO"} exercises={["TODO", "TODO"]}></WorkoutCard>
+                    <WorkoutCard title={"TODO"} lastPerformed={"TODO"} exercises={["TODO", "TODO"]}></WorkoutCard>
+                </View>
+            )}
          </View>
      );
  }
@@ -35,7 +51,21 @@ interface WorkoutFolderProps {
      },
      container: {
          marginBottom: '5%'
-     }
+     },
+     headerRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
+        marginBottom: 8,
+        height: '10%',
+    },
+    folderContainer: {
+        marginTop: '2%',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between', 
+    },
  });
  
  export default WorkoutFolder;

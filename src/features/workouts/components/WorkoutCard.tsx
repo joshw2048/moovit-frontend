@@ -20,15 +20,27 @@ const WorkoutCard: React.FC<WorkoutCardProps> = ({
    lastPerformed,
    exercises
 }) => {
+    // convert lastPerformed to a Date object
+    const lastPerformedDate = new Date(lastPerformed);
+
+    // format lastPerformedDate to a readable string
+    const formattedDate = isNaN(lastPerformedDate.getTime())
+        ? 'Never'
+        : `${lastPerformedDate.toLocaleString('default', { month: 'long' })}, ${lastPerformedDate.getDate()}, ${lastPerformedDate.getFullYear()}`;
 
     return (
-        <View>
+        <View style={[styles.container]}>
             <MoovitText style={{fontFamily: 'InterBold'}}>{ title }</MoovitText>
-            {/* TODO figure out how the heck to do a meatball menu (component with series of icons, name, and "action"? */}
-            <AntDesign name="lock" size={24} color="black" />
-            {/* TODO turn lastPerformed into a Date object and then render as string */}
-            <MoovitSubText>{ lastPerformed }</MoovitSubText>
-            <MoovitSubText>{ exercises }</MoovitSubText>
+            <View style={[styles.timeContainer]}>
+                <AntDesign name="clockcircleo" size={12} color="black" />
+                <MoovitSubText> { formattedDate }</MoovitSubText>
+            </View>
+            <MoovitSubText
+                numberOfLines={2}
+                ellipsizeMode="tail"
+            >
+                { exercises.join(', ') }
+            </MoovitSubText>
         </View>
     );
 }
@@ -39,8 +51,18 @@ const styles = StyleSheet.create({
     },
     container: {
         marginBottom: '5%',
-        borderColor: 'black',
-    }
+        borderColor: 'grey',
+        borderWidth: 0.5,
+        borderRadius: 10,
+        padding: '5%',
+        width: '48%',
+        height: 115,
+    },
+    timeContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: '3%',
+    },
 });
 
 export default WorkoutCard;
