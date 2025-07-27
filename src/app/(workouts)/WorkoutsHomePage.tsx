@@ -36,7 +36,12 @@ const WorkoutsHomePage: React.FC<WorkoutsHomePageProps> = () => {
                 <View style={[styles.templateButtonRow]}>
                     <TouchableOpacity style={[styles.templateOptionsButton]}>
                         {/* TODO make this an actual plus button */}
-                        <MoovitText style={[styles.emptyButtonText]}>+ Create New</MoovitText>
+                        <MoovitText 
+                            style={[styles.emptyButtonText]}
+                            onPress={() => router.push('/(workouts)/NewWorkoutPage')}
+                        >
+                            + Create New
+                        </MoovitText>
                     </TouchableOpacity>
                     <View style={{ width: 16 }} />
                     <TouchableOpacity style={[styles.templateOptionsButton]}>
