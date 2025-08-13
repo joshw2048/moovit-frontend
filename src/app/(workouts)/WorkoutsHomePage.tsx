@@ -35,7 +35,7 @@ const WorkoutsHomePage: React.FC<WorkoutsHomePageProps> = () => {
                 <MoovitHeading2>Templates</MoovitHeading2>
                 <View style={[styles.templateButtonRow]}>
                     <TouchableOpacity style={[styles.templateOptionsButton]}>
-                        {/* TODO make this an actual plus button */}
+                        {/* TODO make this an actual plus button ALSO the onpress should be on the opacity*/}
                         <MoovitText 
                             style={[styles.emptyButtonText]}
                             onPress={() => router.push('/(workouts)/NewWorkoutPage')}
@@ -44,9 +44,12 @@ const WorkoutsHomePage: React.FC<WorkoutsHomePageProps> = () => {
                         </MoovitText>
                     </TouchableOpacity>
                     <View style={{ width: 16 }} />
-                    <TouchableOpacity style={[styles.templateOptionsButton]}>
-                        {/* TODO make this an actual search button */}
-                        <MoovitText style={[styles.emptyButtonText]}>-o Search</MoovitText>
+                    <TouchableOpacity 
+                        style={[styles.templateOptionsButton]}
+                        onPress={() => router.push('/(workouts)/EditWorkoutPage')}
+                    >
+                        {/* TODO make this an actual search button and move navving to actual workout template*/}
+                        <MoovitText style={[styles.emptyButtonText]} onPress={() => router.push('/(workouts)/EditWorkoutPage')}>-o Search</MoovitText>
                     </TouchableOpacity>
                     {/* Take in a list of folders and programtically render them into a component*/}
                     {/* For now, it's a singular folder component to show it */}

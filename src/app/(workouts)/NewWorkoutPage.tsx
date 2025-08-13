@@ -54,7 +54,10 @@ const NewWorkoutPage: React.FC = () => {
                     this is kind of a bad workout... add exercises below
                 </MoovitText>
             </View>
-            <TouchableOpacity style={styles.addExercisesButton}>
+            <TouchableOpacity 
+                style={styles.addExercisesButton}
+                onPress={() => router.push('../AddExercisePage')}
+            >
                 <MoovitText style={styles.addExercisesButtonText}>
                     + Add Exercises
                 </MoovitText>
@@ -124,12 +127,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     addExercisesButton: {
+        // TODO: standardize colors, they should all be the same and pull from the constants file
         backgroundColor: '#B6D0FF',
         borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center',
         height: Dimensions.get('window').width * .08,
-        width: Dimensions.get('window').width - 48,
+        width: '100%'
     },
     addExercisesButtonText: {
         color: '#6C9FFE',
