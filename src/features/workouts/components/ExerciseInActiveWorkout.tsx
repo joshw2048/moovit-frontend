@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
   },
   templateContainer: {
     flex: 1,
-    backgroundColor: '#F9FAFB',
     padding: 16,
   },
   templateHeader: {

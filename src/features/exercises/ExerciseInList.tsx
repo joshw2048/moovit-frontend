@@ -6,11 +6,13 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
   ViewStyle,
-  TextStyle,
+  Animated,
+  PanResponder,
+  Dimensions,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { Colors } from "@/constants/styles"
 
 // Type Definitions
 interface Set {
@@ -33,6 +35,8 @@ interface WorkoutExerciseProps {
   onNotesChange?: (notes: string) => void;
   initialNotes?: string;
 }
+
+const SCREEN_WIDTH = Dimensions.get('window').width; // added
 
 // Icon Button Component
 const IconButton: React.FC<IconButtonProps> = ({ onPress, children, style }) => (
@@ -113,6 +117,10 @@ const ExerciseInList: React.FC<WorkoutExerciseProps> = ({
     }]);
   };
 
+  const removeSet = (setId: number) => { // added
+    setSets(prevSets => prevSets.filter(set => set.id !== setId));
+  };
+
   const handleNotesChange = (value: string): void => {
     setNotes(value);
     if (onNotesChange) {
@@ -120,14 +128,83 @@ const ExerciseInList: React.FC<WorkoutExerciseProps> = ({
     }
   };
 
+  const getPreviousDisplay = (set: Set) => {
+    if (set.lbs && set.reps) {
+      return `${set.lbs} x ${set.reps}`;
+    }
+    return "———";
+  };
+
+  const SwipeableSetRow = ({ set, children }: { set: Set, children: React.ReactNode }) => { // added
+    const translateX = React.useRef(new Animated.Value(0)).current;
+    const [showDelete, setShowDelete] = useState(false);
+
+    const panResponder = React.useRef(
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dx) > 10,
+        onPanResponderMove: (_, gestureState) => {
+          if (gestureState.dx > 0) { // Only allow right swipe
+            translateX.setValue(Math.min(gestureState.dx, 80));
+          }
+        },
+        onPanResponderRelease: (_, gestureState) => {
+          if (gestureState.dx > 60) {
+            Animated.timing(translateX, {
+              toValue: 80,
+              duration: 150,
+              useNativeDriver: true,
+            }).start(() => setShowDelete(true));
+          } else {
+            Animated.timing(translateX, {
+              toValue: 0,
+              duration: 150,
+              useNativeDriver: true,
+            }).start(() => setShowDelete(false));
+          }
+        },
+        onPanResponderTerminate: () => {
+          Animated.timing(translateX, {
+            toValue: 0,
+            duration: 150,
+            useNativeDriver: true,
+          }).start(() => setShowDelete(false));
+        },
+      })
+    ).current;
+
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {showDelete && (
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => removeSet(set.id)}
+            activeOpacity={0.7}
+          >
+            <AntDesign name="delete" size={22} color="#fff" />
+          </TouchableOpacity>
+        )}
+        <Animated.View
+          style={{
+            flex: 1,
+            transform: [{ translateX }],
+            zIndex: 1,
+          }}
+          {...panResponder.panHandlers}
+        >
+          {children}
+        </Animated.View>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.exerciseName}>{exerciseName}</Text>
-        <IconButton onPress={() => {}}>
-          <AntDesign name="ellipsis1" size={20} color="#9CA3AF" />
-        </IconButton>
+        <TouchableOpacity style={styles.blueIconButton} onPress={() => {}}>
+          <AntDesign name="ellipsis1" size={20} color={'white'} />
+        </TouchableOpacity>
       </View>
 
       {/* Notes */}
@@ -180,42 +257,53 @@ const ExerciseInList: React.FC<WorkoutExerciseProps> = ({
       </View>
 
       {/* Sets */}
+      {/* TODO: fix the weird way the delete button appears */}
       {sets.map((set) => (
-        <View key={set.id} style={styles.setRow}>
-          <View style={styles.setColumn}>
-            <View style={styles.setNumber}>
-              <Text style={styles.setNumberText}>{set.id}</Text>
+        <SwipeableSetRow set={set} key={set.id}> {/* changed */}
+          <View style={styles.setRow}>
+            <View style={styles.setColumn}>
+              <View style={styles.setNumber}>
+                <Text style={styles.setNumberText}>{set.id}</Text>
+              </View>
+            </View>
+
+            <View style={styles.previousColumn}>
+              <Text
+                style={
+                  set.lbs && set.reps
+                    ? styles.previousTextFilled
+                    : styles.previousTextDash
+                }
+              >
+                {getPreviousDisplay(set)}
+              </Text>
+            </View>
+
+            <View style={styles.inputColumn}>
+              <TextInput
+                style={styles.input}
+                value={set.lbs}
+                onChangeText={(value: string) => updateSet(set.id, 'lbs', value)}
+                placeholder="0"
+                placeholderTextColor="#9CA3AF"
+                keyboardType="numeric"
+                textAlign="center"
+              />
+            </View>
+
+            <View style={styles.inputColumn}>
+              <TextInput
+                style={styles.input}
+                value={set.reps}
+                onChangeText={(value: string) => updateSet(set.id, 'reps', value)}
+                placeholder="0"
+                placeholderTextColor="#9CA3AF"
+                keyboardType="numeric"
+                textAlign="center"
+              />
             </View>
           </View>
-
-          <View style={styles.previousColumn}>
-            <Text style={styles.previousText}>{set.previous}</Text>
-          </View>
-
-          <View style={styles.inputColumn}>
-            <TextInput
-              style={styles.input}
-              value={set.lbs}
-              onChangeText={(value: string) => updateSet(set.id, 'lbs', value)}
-              placeholder="0"
-              placeholderTextColor="#9CA3AF"
-              keyboardType="numeric"
-              textAlign="center"
-            />
-          </View>
-
-          <View style={styles.inputColumn}>
-            <TextInput
-              style={styles.input}
-              value={set.reps}
-              onChangeText={(value: string) => updateSet(set.id, 'reps', value)}
-              placeholder="0"
-              placeholderTextColor="#9CA3AF"
-              keyboardType="numeric"
-              textAlign="center"
-            />
-          </View>
-        </View>
+        </SwipeableSetRow>
       ))}
 
       {/* Add Set Button */}
@@ -228,18 +316,7 @@ const ExerciseInList: React.FC<WorkoutExerciseProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
+    marginBottom: 24,
   },
   header: {
     flexDirection: 'row',
@@ -314,6 +391,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#374151',
     textAlign: 'center',
+    fontFamily: 'InterBold',
   },
   setRow: {
     flexDirection: 'row',
@@ -364,10 +442,11 @@ const styles = StyleSheet.create({
   },
   addSetButton: {
     backgroundColor: '#9CA3AF',
-    paddingVertical: 12,
+    paddingVertical: 6,
     paddingHorizontal: 16,
-    borderRadius: 4,
+    borderRadius: 999,
     alignItems: 'center',
+    marginTop: 8,
   },
   addSetButtonText: {
     color: '#FFFFFF',
@@ -411,6 +490,35 @@ const styles = StyleSheet.create({
     color: '#1D4ED8',
     fontSize: 14,
     fontWeight: '500',
+  },
+  previousTextDash: { 
+    fontSize: 14, 
+    fontWeight: 'bold', 
+    color: Colors.darkGrey,
+    textAlign: 'center', 
+  },
+  previousTextFilled: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: Colors.darkGrey,
+    textAlign: 'center',
+  },
+  blueIconButton: {
+    backgroundColor: Colors.moovitBlue,
+    borderRadius: 6,
+    paddingHorizontal: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteButton: { // added
+    width: 48,
+    height: 48,
+    backgroundColor: '#EF4444',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
+    zIndex: 2,
   },
 });
 
